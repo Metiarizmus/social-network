@@ -1,0 +1,32 @@
+* {
+    border-radius: 5px;
+    margin: 0;
+}
+
+html {
+    font-size: 20px;
+    background-color: #eee;
+    font-family: 'Roboto', sans-serif;
+    max-width: 100%;
+}
+/* novig */
+.nav span {
+    color: black;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.nav li i {
+    color: rgb(10, 7, 201);
+}
+
+.novig {
+    padding-left: 10%;
+    width: 25%;
+    background-color: #eee;
+
+}
+
+.nav .nav-item:hover  {
+    background-color: #55535325;
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+<style>
+    body {
+        height: 100%;
+        background-color: #eee;
+    }
+</style>
+
+<section class="vh-100">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+                <div class="card text-black" style="border-radius: 25px;">
+                    <div class="card-body p-md-5">
+                        <div class="row justify-content-center">
+                            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+                                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Registration</p>
+
+                                <form class="mx-1 mx-md-4" th:action="@{/registration}" method="post" th:object="${user}">
+
+
+                                    <div class="alert alert-warning" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+                                    <div class="d-flex flex-row align-items-center mb-4">
+
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="text" id="form3Example1c" th:field="*{firstName}" class="form-control" placeholder="firstname"/>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="alert alert-warning" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="text" id="form3Example1c" th:field="*{lastName}" class="form-control" placeholder="lastname"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="alert alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="email" id="form3Example3c" th:field="*{email}" class="form-control" placeholder="email"/>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="alert alert-warning" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></div>
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="date" class="form-control"  id="form3Example3c" th:field="*{birthday}"  placeholder="birthday"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="alert alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="password" id="myInput" th:field="*{password}" autocomplete="current-password" class="form-control" placeholder="password"/>
+                                            <input type="checkbox" class="showPassword" onclick="myFunction()">Show Password
+                                        </div>
+                                    </div>
+
+                                    <div class="alert alert-warning" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="password" id="form3Example4cd" class="form-control" th:field="*{confirmPassword}" placeholder="confirm password"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center mx-4 mb-2 mb-lg-4">
+                                        <button type="submit" class="btn btn-primary btn-lg">Registration</button>
+                                    </div>
+
+                                    <p class="text-center text-muted mt-2">Have already an account? <a th:href="@{/login}" class="fw-bold text-body"><u>Login here</u></a></p>
+
+
+                                </form>
+
+                            </div>
+                            <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+
+                                <img src="https://i.pinimg.com/originals/c5/28/9c/c5289c8e58977b95b252ae3e8c60c845.png" class="img-fluid" alt="Sample image">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function myFunction() {
+        var x = document.getElementById("myInput");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+</body>
+</html>
