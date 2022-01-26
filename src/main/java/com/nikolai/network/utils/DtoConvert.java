@@ -7,7 +7,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Date;
 
 @Component
 public class DtoConvert {
@@ -22,6 +24,7 @@ public class DtoConvert {
         UserProfileDto userProfileDto = modelMapper.map(user,UserProfileDto.class);
         userProfileDto.setEncodeBase64(convertBinImageToString(userProfileDto.getAvatar()));
         userProfileDto.setFullName(userProfileDto.getFirstName() + " " + userProfileDto.getLastName());
+        userProfileDto.setDateRegistr(user.getDate());
         return userProfileDto;
     }
 
@@ -32,4 +35,6 @@ public class DtoConvert {
         else
             return "";
     }
+
+
 }

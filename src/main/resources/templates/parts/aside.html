@@ -17,33 +17,33 @@
     <ul class="nav flex-column">
 
       <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a th:href="@{/profile(email = ${#authentication.name})}" class="nav-link">
           <i class="far fa-user" ></i> <span class="ms-1 d-none d-sm-inline">My profile</span>
         </a>
       </li>
 
       <li class="nav-item">
-        <a href="#" class="nav-link ">
+        <a th:href="@{/news(email = ${#authentication.name})}" class="nav-link ">
           <i class="fas fa-newspaper"></i> <span class="ms-1 d-none d-sm-inline">News</span></a>
       </li>
 
       <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a th:href="@{/messages(email = ${#authentication.name})}" class="nav-link">
           <i class="fas fa-comments" ></i> <span class="ms-1 d-none d-sm-inline">Messenger</span> </a>
       </li>
 
       <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a th:href="@{/friends(email = ${#authentication.name})}" class="nav-link">
           <i class="fas fa-user-friends"></i> <span class="ms-1 d-none d-sm-inline">Friends</span> </a>
       </li>
 
       <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a th:href="@{/groups(email = ${#authentication.name})}" class="nav-link">
           <i class="fas fa-users"></i> <span class="ms-1 d-none d-sm-inline">Groups</span> </a>
       </li>
 
       <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a th:href="@{/gallery(email = ${#authentication.name})}" class="nav-link">
           <i class="fas fa-images"></i> <span class="ms-1 d-none d-sm-inline">Gallery</span> </a>
       </li>
 

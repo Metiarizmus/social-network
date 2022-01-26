@@ -26,5 +26,57 @@
 .conteiner > div {
     float: left;
     margin-right: 2%;
+}
 
+
+.conteinerInfo {
+    width: 40%;
+}
+
+.info{
+    background-color: white;
+    padding: 2%;
+}
+
+.userName {
+    font-family: 'Roboto', sans-serif;
+    font-size: 19px;
+    line-height: 25px;
+    font-weight: 400;
+    text-align: left;
+}
+
+.fields {
+    width: 60%;
+
+}
+
+.fields ul  {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.fields span {
+    float: right;
+}
+
+.count ul {
+    padding-left: 10%;
+}
+.count ul li{
+    list-style: none;
+    display: inline;
+
+    padding-left: 30px;
+
+}
+
+.info {
+    margin-bottom: 3%;
+}
+
+.myPhotos {
+    background-color: white;
+    padding: 2%;
 }

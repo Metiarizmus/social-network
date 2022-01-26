@@ -29,10 +29,10 @@ public class User extends BaseEntity {
     @Transient
     private String confirmPassword;
 
-    @Column(name = "birthday", columnDefinition = "DATE")
+    @Column(name = "birthday")
     private String birthday;
 
-    @Column(name = "avatar", columnDefinition = "BLOB")
+    @Column(name = "avatar", columnDefinition = "LONGBLOB")
     private byte[] avatar;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)

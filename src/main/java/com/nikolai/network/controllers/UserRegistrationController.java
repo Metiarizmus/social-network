@@ -1,4 +1,4 @@
-package com.nikolai.network.controller;
+package com.nikolai.network.controllers;
 
 import com.nikolai.network.dto.UserRegistrDto;
 import com.nikolai.network.model.User;

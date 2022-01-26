@@ -1,0 +1,58 @@
+* {
+    border-radius: 5px;
+    margin: 0;
+}
+
+html {
+    font-size: 20px;
+    background-color: #efefef;
+    font-family: 'Roboto', sans-serif;
+    max-width: 100%;
+}
+
+/* conteiner */
+.conteiner {
+    margin-top: 6%;
+    width: 100%;
+    height: 100%;
+}
+.conteiner > div {
+    float: left;
+    margin-right: 2%;
+
+}
+/* conteiner */
+
+
+.gallery {
+    width: 58%;
+}
+
+
+/* loadPhotos */
+.loadPhotos{
+    background-color: white;
+    padding: 0.5%;
+    line-height: 50px;
+
+}
+.loadPhotos span {
+    padding-left: 3%;
+}
+
+.loadPhotos button {
+    float: right;
+    font-size: 20px;
+}
+/* loadPhotos */
+
+
+
+/* photos */
+.photos {
+    margin-top: 0.5%;
+    background-color: white;
+    padding: 3%;
+
+}
+/* photos */

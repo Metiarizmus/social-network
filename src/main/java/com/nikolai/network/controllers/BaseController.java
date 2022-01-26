@@ -1,4 +1,4 @@
-package com.nikolai.network.controller;
+package com.nikolai.network.controllers;
 
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;

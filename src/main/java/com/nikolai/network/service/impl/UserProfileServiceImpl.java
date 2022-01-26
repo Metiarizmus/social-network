@@ -28,9 +28,10 @@ public class UserProfileServiceImpl implements UserProfileService {
     public void saveAvatar(byte[] avatar, String email) {
 
         Optional<User> user = Optional.ofNullable(userRepository.findByEmail(email));
+        System.out.println(avatar);
         user.get().setAvatar(avatar);
         logger.info("save avatar for user with email :: " + email);
-
+        userRepository.save(user.get());
     }
 
     @Override

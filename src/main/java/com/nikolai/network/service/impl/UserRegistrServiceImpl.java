@@ -43,7 +43,7 @@ public class UserRegistrServiceImpl implements UserRegistrService {
         user.setLastName(userRegistrDto.getLastName());
         user.setEmail(userRegistrDto.getEmail());
         user.setPassword(passwordEncoder.encode(userRegistrDto.getPassword()));
-        user.setBirthday(userRegistrDto.getBirthday());
+        user.setBirthday(convertDateToFormat(userRegistrDto.getBirthday()));
         user.setDate(dateNow());
         user.setRoles(Collections.singleton(new Role(EnumRoles.ROLE_USER)));
 
@@ -73,6 +73,12 @@ public class UserRegistrServiceImpl implements UserRegistrService {
     private static String dateNow() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         String format = formatter.format(new Date());
+        return format;
+    }
+
+    private static String convertDateToFormat(String date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        String format = formatter.format(date);
         return format;
     }
 }

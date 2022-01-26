@@ -13,5 +13,7 @@ public class UserProfileDto {
     private byte[] avatar;
     private String encodeBase64;
     private String password;
+    private String dateRegistr;
+    private String email;
 
 }

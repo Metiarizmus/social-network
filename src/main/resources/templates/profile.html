@@ -4,8 +4,7 @@
 >
 <head>
     <meta charset="UTF-8">
-<!--    <meta th:name="_csrf" th:content="${_csrf.token}"/>-->
-<!--    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+
     <title th:text="${user.fullName}"> </title>
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/aside.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/header.css}">
@@ -17,13 +16,7 @@
 </head>
 <body>
 
-<!--<script>-->
-<!--    $.ajaxSetup({-->
-<!--        headers: {-->
-<!--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')-->
-<!--        }-->
-<!--    });-->
-<!--</script>-->
+
 
 
 <div class="conteiner">
@@ -33,6 +26,7 @@
     <div th:replace="parts/aside :: aside"></div>
 
     <div class="profil">
+        <!--/*@thymesVar id="encodeBase64" type="com.nikolai.network.dto.UserProfileDto"*/-->
         <img class="imag" src="" alt="" th:src="@{'data:image/jpeg;base64,'+${user.encodeBase64}}" >
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -43,6 +37,41 @@
                 <li><a class="dropdown-item" href="#">Change Information</a></li>
             </ul>
         </div>
+    </div>
+
+    <!--/*@thymesVar id="fullName" type="com.nikolai.network.dto.UserProfileDto"*/-->
+    <div class="conteinerInfo">
+        <div class="info">
+
+            <p class="userName" th:text="${user.fullName}"></p>
+            <hr>
+
+            <div class="fields">
+
+                <ul>
+                    <li>Birthday: <span th:text="${user.birthday}"></span></li>
+                    <li>Date registration: <span th:text="${user.dateRegistr}"></span></li>
+                </ul>
+
+            </div>
+
+            <hr>
+
+            <div class="count">
+                <ul>
+                    <li>Friends</li>
+                    <li>subscribers</li>
+                    <li>Photos</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="myPhotos">
+            <p>My photos </p>
+        </div>
+
+
     </div>
 
 </div>
@@ -65,7 +94,7 @@
 
                         <label class="col-form-label">If you have a avatar then user can find you more simply</label>
                         <p th:text="${message}" style="color: red"></p>
-                        <input type="file" class="form-control" placeholder="" name="image" id="image" required="required">
+                        <input type="file" class="form-control" name="image" id="image" required="required">
 
                 </div>
 

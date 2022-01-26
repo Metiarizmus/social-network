@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/user/**").access("hasRole('ROLE_USER')");
+                .antMatchers("/saveAvatar/**").access("hasRole('ROLE_USER')");
 
         http
                 .csrf().disable()
