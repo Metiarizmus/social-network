@@ -1,0 +1,40 @@
+
+
+/* friends */
+
+.friends {
+    width: 42%;
+}
+
+.findFriend {
+    background-color: white;
+    padding: 2%;
+    line-height: normal;
+    margin-bottom: 0.5%;
+}
+
+.asideFriend {
+    background-color: white;
+    padding: 1%;
+
+}
+
+.friendsList {
+    background-color: white;
+    padding: 1%;
+}
+
+.peopleList {
+    background-color: white;
+    padding: 1%;
+}
+/* friends */
+
+
+/* searc people */
+
+.findPeople {
+    width: 42%;
+}
+
+/* searc people */

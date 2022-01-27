@@ -27,5 +27,4 @@ public class Friend extends BaseEntity{
     private User secondUser;
 
 
-
 }

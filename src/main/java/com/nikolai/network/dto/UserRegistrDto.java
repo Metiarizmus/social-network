@@ -4,10 +4,12 @@ package com.nikolai.network.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 
 @Data
@@ -15,6 +17,8 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 
 public class UserRegistrDto {
+
+    private String fullName;
 
     @Size(min = 2, max = 10)
     private String firstName;
@@ -32,7 +36,7 @@ public class UserRegistrDto {
     private String confirmPassword;
 
     @NotNull
-    private String birthday;
+    private Date birthday;
 
     private String dateRegistr;
 

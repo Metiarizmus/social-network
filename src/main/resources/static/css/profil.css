@@ -11,23 +11,13 @@
     margin-bottom: 10px;
     height: 300px;
     width: 100%;
+    object-fit: cover;
 }
 
 .btn {
     width: 100%;
 
 }
-
-.conteiner {
-    margin-top: 6%;
-    width: 100%;
-    height: 100%;
-}
-.conteiner > div {
-    float: left;
-    margin-right: 2%;
-}
-
 
 .conteinerInfo {
     width: 40%;
@@ -61,14 +51,11 @@
     float: right;
 }
 
-.count ul {
-    padding-left: 10%;
-}
-.count ul li{
-    list-style: none;
-    display: inline;
+.count > div{
 
-    padding-left: 30px;
+    display: inline-block;
+    text-align: center;
+    padding-left: 15%;
 
 }
 
@@ -76,7 +63,37 @@
     margin-bottom: 3%;
 }
 
-.myPhotos {
+.photos {
     background-color: white;
     padding: 2%;
+    text-align: justify;
+}
+.photos:after {
+    content:""; display: inline-block; width: 100%; height: 0;
+
+}
+
+.photos img {
+    height: 150px;
+    object-fit: cover;
+    display:inline-block;
+}
+
+.allPhotos:hover {
+    cursor: pointer;
+}
+
+.photosGallery {
+    margin-top: 0.5%;
+    background-color: white;
+    padding: 3%;
+
+}
+
+.photosGallery img {
+    height: 300px;
+    max-height: 400px;
+    max-width: 300px;
+    margin-right: 10px;
+    margin-bottom: 10px;
 }

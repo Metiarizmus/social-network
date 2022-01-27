@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/friends.css}">
+
+</head>
+<body>
+
+<div class="findPeople" th:fragment="findPeople">
+    <div class="findFriend">
+        Fiending
+        <hr>
+
+        <div id="formKeyword">
+            <form method="post" th:action="@{/friends/searchPeople}" id="formSearchPeoples">
+                <input type="text" id="keyword" name="keyword" size="50" onkeyup='saveValue(this);' autofocus oninput="searchPeopleF()" placeholder="Enter name or lastname">
+            </form>
+        </div>
+
+
+    </div>
+
+    <div class="peopleList" th:each="people : ${peoples}" >
+        <div class="people">
+            <span th:text="${people.getFullName()}"></span>
+            <span th:text="${people.getBirthday()}"></span>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>

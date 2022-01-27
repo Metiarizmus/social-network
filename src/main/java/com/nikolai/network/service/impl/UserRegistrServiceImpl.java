@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 @Service
-public class UserRegistrServiceImpl implements UserRegistrService {
+public class UserRegistrServiceImpl extends BaseService implements UserRegistrService {
 
     @Autowired
     private UserRepository userRepository;
@@ -70,15 +70,5 @@ public class UserRegistrServiceImpl implements UserRegistrService {
                 .collect(Collectors.toList());
     }
 
-    private static String dateNow() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        String format = formatter.format(new Date());
-        return format;
-    }
 
-    private static String convertDateToFormat(String date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        String format = formatter.format(date);
-        return format;
-    }
 }

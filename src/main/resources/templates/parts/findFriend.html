@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/friends.css}">
+</head>
+<body>
+
+
+<div class="findFriend" th:fragment="findFriend">
+
+    All friends: <span th:text="${count}" style="text-align: right; width: 10%">10</span>
+
+    <hr>
+
+    <input type="text" placeholder="find friend">
+
+</div>
+
+<div class="friendsList" >
+    list friendsov
+</div>
+</div>
+
+</body>
+</html>

@@ -1,3 +1,5 @@
+
+
 package com.nikolai.network.config;
 
 import com.nikolai.network.service.interfaces.UserRegistrService;
@@ -40,8 +42,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/saveAvatar/**").access("hasRole('ROLE_USER')");
 
         http
                 .csrf().disable()
@@ -68,7 +68,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
 
     }
-
 
 
 }

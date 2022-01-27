@@ -1,6 +1,6 @@
 package com.nikolai.network.service.impl;
 
-import com.nikolai.network.dto.UserProfileDto;
+import com.nikolai.network.dto.UserDto;
 import com.nikolai.network.model.User;
 import com.nikolai.network.repository.UserRepository;
 import com.nikolai.network.service.interfaces.UserProfileService;
@@ -35,10 +35,10 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public UserProfileDto getUserDto(String email) {
+    public UserDto getUserDto(String email) {
         Optional<User> user = Optional.ofNullable(userRepository.findByEmail(email));
 
-        return dtoConvert.convertToDtoForProfile(user.get());
+        return dtoConvert.convertToDtoForUserDto(user.get());
     }
 
 

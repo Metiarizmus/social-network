@@ -5,18 +5,18 @@
 <head>
     <meta charset="UTF-8">
 
-    <title th:text="${user.fullName}"> </title>
+    <title th:text="${user.fullName}"></title>
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/aside.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/header.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/profil.css}">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet"
+          type="text/css"/>
 
 </head>
 <body>
-
-
 
 
 <div class="conteiner">
@@ -26,20 +26,25 @@
     <div th:replace="parts/aside :: aside"></div>
 
     <div class="profil">
-        <!--/*@thymesVar id="encodeBase64" type="com.nikolai.network.dto.UserProfileDto"*/-->
-        <img class="imag" src="" alt="" th:src="@{'data:image/jpeg;base64,'+${user.encodeBase64}}" >
+        <!--/*@thymesVar id="encodeBase64" type="com.nikolai.network.dto.UserDto"*/-->
+        <img class="imag" src="" alt="" th:src="@{'data:image/jpeg;base64,'+${user.encodeBase64}}">
         <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown"
+                    aria-expanded="false">
                 Edit
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <li><button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Change avatar</button></li>
+                <li>
+                    <button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Change
+                        avatar
+                    </button>
+                </li>
                 <li><a class="dropdown-item" href="#">Change Information</a></li>
             </ul>
         </div>
     </div>
 
-    <!--/*@thymesVar id="fullName" type="com.nikolai.network.dto.UserProfileDto"*/-->
+    <!--/*@thymesVar id="fullName" type="com.nikolai.network.dto.UserDto"*/-->
     <div class="conteinerInfo">
         <div class="info">
 
@@ -58,17 +63,33 @@
             <hr>
 
             <div class="count">
-                <ul>
-                    <li>Friends</li>
-                    <li>subscribers</li>
-                    <li>Photos</li>
-                </ul>
+
+                <div>
+                    5 <br>
+                    Friends
+                </div>
+
+                <div>
+                    6 <br>
+                    Subscribers
+                </div>
+
+<!--                data-bs-toggle="modal" data-bs-target="#myModal"-->
+                <div class="allPhotos" onclick="showModal()">
+                    <span th:text="${countImage}" ></span> <br>
+                    Photos
+                </div>
+
             </div>
 
         </div>
 
-        <div class="myPhotos">
-            <p>My photos </p>
+        <div class="photos">
+            <span th:each="image, imageState : ${images}">
+
+            <img th:if="${imageState.count <= 4}" th:src="@{'data:image/jpeg;base64,'+${image.encodeBase64}}"/>
+
+            </span>
         </div>
 
 
@@ -77,7 +98,7 @@
 </div>
 
 
-<!--modal-->
+<!--modal edit-->
 
 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -89,17 +110,18 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form method="post" th:action="@{/saveAvatar}" enctype="multipart/form-data" id="formAvatar">
+            <form method="post" th:action="@{/saveAvatar(email = ${#authentication.name})}"
+                  enctype="multipart/form-data" id="formAvatar">
                 <div class="modal-body">
 
-                        <label class="col-form-label">If you have a avatar then user can find you more simply</label>
-                        <p th:text="${message}" style="color: red"></p>
-                        <input type="file" class="form-control" name="image" id="image" required="required">
+                    <label class="col-form-label">If you have a avatar then user can find you more simply</label>
+                    <input type="file" class="form-control" name="image" id="image" required="required">
 
                 </div>
 
                 <div class="modal-footer">
-                    <button type="submit" id="submit" class="btn btn-outline-success" form="formAvatar">Save changes</button>
+                    <button type="submit" id="submit" class="btn btn-outline-success" form="formAvatar">Save changes
+                    </button>
                 </div>
 
             </form>
@@ -111,11 +133,41 @@
     </div>
 </div>
 
-<!--modal-->
+<!--modal edit-->
+
+
+<!--modal gallery-->
+<div class="modal fade" id="modalGallery" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+
+            <div class="photosGallery">
+                 <span th:each="image : ${images}">
+
+                 <img  th:src="@{'data:image/jpeg;base64,'+${image.encodeBase64}}"/>
+
+                 </span>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<!--modal gallery-->
+
+<script>
+    window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
+    function showModal() {
+        $('#modalGallery').modal('show');
+    }
+</script>
 
 <script src="https://kit.fontawesome.com/39221df667.js" crossorigin="anonymous"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://yastatic.net/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
 
 </body>
 </html>
