@@ -2,6 +2,7 @@ package com.nikolai.network.service.impl;
 
 import com.nikolai.network.dto.UserDto;
 import com.nikolai.network.model.User;
+import com.nikolai.network.repository.FriendRepository;
 import com.nikolai.network.repository.UserRepository;
 import com.nikolai.network.service.interfaces.UserProfileService;
 import com.nikolai.network.utils.DtoConvert;
@@ -13,9 +14,9 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserProfileServiceImpl implements UserProfileService {
+public class ProfileServiceImpl extends BaseServiceImpl implements UserProfileService {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserProfileServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProfileServiceImpl.class);
 
 
     @Autowired
@@ -23,6 +24,9 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Autowired
     private DtoConvert dtoConvert;
+
+    @Autowired
+    private FriendRepository friendRepository;
 
     @Override
     public void saveAvatar(byte[] avatar, String email) {
@@ -34,11 +38,12 @@ public class UserProfileServiceImpl implements UserProfileService {
         userRepository.save(user.get());
     }
 
-    @Override
-    public UserDto getUserDto(String email) {
-        Optional<User> user = Optional.ofNullable(userRepository.findByEmail(email));
 
-        return dtoConvert.convertToDtoForUserDto(user.get());
+    @Override
+    public UserDto findById(Integer id) {
+        Optional<User> user = userRepository.findById(id);
+
+        return dtoConvert.convertToUserDto(user.get());
     }
 
 

@@ -3,7 +3,7 @@
 /* friends */
 
 .friends {
-    width: 42%;
+    width: 45%;
 }
 
 .findFriend {
@@ -16,7 +16,6 @@
 .asideFriend {
     background-color: white;
     padding: 1%;
-
 }
 
 .friendsList {
@@ -24,17 +23,60 @@
     padding: 1%;
 }
 
+
+
+/* friends */
+
+
+/*peopleList*/
 .peopleList {
     background-color: white;
     padding: 1%;
 }
-/* friends */
 
 
-/* searc people */
-
-.findPeople {
-    width: 42%;
+.peopleList img {
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
 }
 
-/* searc people */
+.peopleList div {
+    display: inline-block;
+    padding: 1%;
+
+}
+
+.people a:hover {
+    cursor: pointer;
+    background-color: #878282;
+}
+
+/*peopleList*/
+
+/*friendList*/
+
+
+
+/*friendList*/
+
+.count {
+    border-radius: 50%;
+    background: #a0a0a0;
+    border: 2px solid #a0a0a0;
+    color: #fff;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 2px;
+    float: right;
+}
+
+
+
+
+.people ul {
+    padding: 0;
+}
+.people li {
+    display: inline;
+}

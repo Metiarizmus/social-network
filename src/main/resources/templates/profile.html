@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
 
-    <title th:text="${user.fullName}"></title>
+    <title th:text="${user.getFullName()}"></title>
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/aside.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/header.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/profil.css}">
@@ -25,10 +25,13 @@
 
     <div th:replace="parts/aside :: aside"></div>
 
+
     <div class="profil">
         <!--/*@thymesVar id="encodeBase64" type="com.nikolai.network.dto.UserDto"*/-->
         <img class="imag" src="" alt="" th:src="@{'data:image/jpeg;base64,'+${user.encodeBase64}}">
-        <div class="dropdown">
+
+
+        <div class="dropdown" th:if="${user.getEmail() == #authentication.name}">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown"
                     aria-expanded="false">
                 Edit
@@ -42,6 +45,17 @@
                 <li><a class="dropdown-item" href="#">Change Information</a></li>
             </ul>
         </div>
+
+        <div th:if="${user.yourFriend == true}">
+            <button type="button" class="btn btn-outline-success" disabled>your friend</button>
+        </div>
+
+        <div th:if="${user.getEmail() != #authentication.name and user.yourFriend == false}">
+            <a th:href="@{/friends/requestAddFriends(toId = ${user.getId()})}" role="button" class="btn btn-outline-primary addFriend">add to friends</a>
+        </div>
+
+
+
     </div>
 
     <!--/*@thymesVar id="fullName" type="com.nikolai.network.dto.UserDto"*/-->
@@ -65,18 +79,18 @@
             <div class="count">
 
                 <div>
-                    5 <br>
+                    <span th:text="${user.countFriends}" ></span> <br>
                     Friends
                 </div>
 
                 <div>
-                    6 <br>
+                    <span th:text="${user.countSubscribers}" ></span> <br>
                     Subscribers
                 </div>
 
 <!--                data-bs-toggle="modal" data-bs-target="#myModal"-->
                 <div class="allPhotos" onclick="showModal()">
-                    <span th:text="${countImage}" ></span> <br>
+                    <span th:text="${images.size()}" ></span> <br>
                     Photos
                 </div>
 
@@ -157,6 +171,14 @@
 <!--modal gallery-->
 
 <script>
+
+    const addFriend = document.querySelector("addFriend")
+    addFriend.addEventListener('click', function (){
+        addFriend.innerText = 'sent';
+        addFriend.disabled = true;
+    })
+
+
     window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
     function showModal() {
         $('#modalGallery').modal('show');

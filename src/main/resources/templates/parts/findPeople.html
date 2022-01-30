@@ -12,27 +12,35 @@
 
 <div class="findPeople" th:fragment="findPeople">
     <div class="findFriend">
-        Fiending
+        <span style="padding-left:35%">Searching new people</span>
         <hr>
 
         <div id="formKeyword">
             <form method="post" th:action="@{/friends/searchPeople}" id="formSearchPeoples">
-                <input type="text" id="keyword" name="keyword" size="50" onkeyup='saveValue(this);' autofocus oninput="searchPeopleF()" placeholder="Enter name or lastname">
+                <input type="text" id="keyword" name="keyword" size="25" onkeyup='saveValue(this);' autofocus oninput="searchPeopleF(this)" placeholder="Enter name or lastname">
             </form>
         </div>
 
 
     </div>
 
-    <div class="peopleList" th:each="people : ${peoples}" >
-        <div class="people">
-            <span th:text="${people.getFullName()}"></span>
-            <span th:text="${people.getBirthday()}"></span>
+    <div class="peopleList" >
+
+        <div class="people" th:each="people, state : ${peoples}">
+            <a th:href="@{/friends/profileUser(id=${people.getId()})}">
+                <img  th:src="@{'data:image/jpeg;base64,'+${people.encodeBase64}}"/> <br>
+                <label th:text="${people.getFullName()}" style="color: black"></label>
+            </a>
+
         </div>
+
+
     </div>
+
 
 </div>
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script th:src="@{../static/js/friends.js}"></script>
 </body>
 </html>

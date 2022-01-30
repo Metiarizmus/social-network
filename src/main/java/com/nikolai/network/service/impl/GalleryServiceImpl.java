@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class GalleryServiceImpl extends BaseService implements GalleryService {
+public class GalleryServiceImpl extends BaseServiceImpl implements GalleryService {
 
     @Autowired
     private ImageUtils fileSystemService;
@@ -52,7 +52,7 @@ public class GalleryServiceImpl extends BaseService implements GalleryService {
 
         for (Image q : images) {
             try {
-                imageDtos.add(dtoConvert.convertToDto(q));
+                imageDtos.add(dtoConvert.convertToRegistrDto(q));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }

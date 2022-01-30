@@ -26,5 +26,4 @@ public class Friend extends BaseEntity{
     @JoinColumn(name = "user2_id", referencedColumnName = "id")
     private User secondUser;
 
-
 }

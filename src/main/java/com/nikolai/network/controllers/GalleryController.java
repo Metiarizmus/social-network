@@ -1,6 +1,7 @@
 package com.nikolai.network.controllers;
 
 import com.nikolai.network.dto.ImageDto;
+import com.nikolai.network.dto.UserDto;
 import com.nikolai.network.model.User;
 import com.nikolai.network.repository.UserRepository;
 import com.nikolai.network.service.interfaces.GalleryService;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 import java.util.Random;
 
@@ -35,12 +37,14 @@ public class GalleryController{
     private GalleryService galleryService;
 
     @GetMapping("/gallery")
-    public String showGallery(@RequestParam("email") String email,
+    public String showGallery(Principal principal,
                               Model map) {
-        List<ImageDto> images = galleryService.getAllImageForUser(email);
+        List<ImageDto> images = galleryService.getAllImageForUser(principal.getName());
+
+        UserDto userDto = galleryService.getUserDto(principal.getName());
 
         map.addAttribute("images", images);
-        map.addAttribute("count", images.size());
+        map.addAttribute("user",userDto);
         return "gallery";
     }
 

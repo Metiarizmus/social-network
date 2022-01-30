@@ -51,5 +51,10 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     private Set<ConversationReply> message;
 
+    @OneToOne(mappedBy = "firstUser")
+    private Friend friendFrom;
+
+    @OneToOne(mappedBy = "secondUser")
+    private Friend friendTo;
 
 }

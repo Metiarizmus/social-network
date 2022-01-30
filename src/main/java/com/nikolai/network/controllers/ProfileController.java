@@ -1,6 +1,8 @@
 package com.nikolai.network.controllers;
 
 import com.nikolai.network.dto.ImageDto;
+import com.nikolai.network.dto.UserDto;
+import com.nikolai.network.service.interfaces.FriendsService;
 import com.nikolai.network.service.interfaces.GalleryService;
 import com.nikolai.network.service.interfaces.UserProfileService;
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.*;
 
 @Controller
@@ -49,14 +52,19 @@ public class ProfileController{
         return "redirect:/";
     }
 
+
     @GetMapping("/profile")
-    public String root(@RequestParam("email") String email, Model map) {
-        logger.info("user object for " + email);
-        List<ImageDto> images = galleryService.getAllImageForUser(email);
+    public String root(Model map, Principal principal) {
+
+        List<ImageDto> images = galleryService.getAllImageForUser(principal.getName());
+
+        logger.info("show profile");
+
+        UserDto profileUserDto = profileService.getUserDto(principal.getName());
 
         map.addAttribute("images", images);
-        map.addAttribute("countImage", images.size());
-        map.addAttribute("user",profileService.getUserDto(email));
+        map.addAttribute("user",profileUserDto);
+
         return "profile";
     }
 

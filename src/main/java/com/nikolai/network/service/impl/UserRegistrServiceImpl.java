@@ -15,14 +15,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.stream.Collectors;
 
 @Service
-public class UserRegistrServiceImpl extends BaseService implements UserRegistrService {
+public class UserRegistrServiceImpl extends BaseServiceImpl implements UserRegistrService {
 
     @Autowired
     private UserRepository userRepository;
