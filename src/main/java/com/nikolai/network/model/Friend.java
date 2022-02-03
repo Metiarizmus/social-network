@@ -19,11 +19,12 @@ public class Friend extends BaseEntity{
     private StatusFriends statusFriends;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user1_id", referencedColumnName = "id")
-    private User firstUser;
+    @JoinColumn(name = "user_from", referencedColumnName = "id")
+    private User userFrom;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user2_id", referencedColumnName = "id")
-    private User secondUser;
+    @JoinColumn(name = "user_to", referencedColumnName = "id")
+    private User userTo;
+
 
 }

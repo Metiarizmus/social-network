@@ -17,9 +17,12 @@ public class ContentGroup extends BaseEntity{
     @Column(name = "content", columnDefinition = "TEXT")
     private String content;
 
-    @Column(name = "file_content", columnDefinition = "BLOB")
+    @Column(name = "file_content", columnDefinition = "LONGBLOB")
     private byte[] fileContent;
 
-    @ManyToMany(mappedBy = "contentGroups")
-    private Set<Group> groups;
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private Group group;
+
+
 }

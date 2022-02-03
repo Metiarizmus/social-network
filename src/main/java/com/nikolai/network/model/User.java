@@ -1,8 +1,6 @@
 package com.nikolai.network.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -11,7 +9,8 @@ import java.util.Set;
 @AllArgsConstructor
 @Table(name = "user")
 @Entity
-@Data
+@Getter
+@Setter
 public class User extends BaseEntity {
 
     @Column(name = "first_name", length = 15)
@@ -51,10 +50,10 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     private Set<ConversationReply> message;
 
-    @OneToOne(mappedBy = "firstUser")
+    @OneToOne(mappedBy = "userFrom")
     private Friend friendFrom;
 
-    @OneToOne(mappedBy = "secondUser")
+    @OneToOne(mappedBy = "userTo")
     private Friend friendTo;
 
 }

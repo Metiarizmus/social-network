@@ -9,6 +9,8 @@
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/aside.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/header.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/profil.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/friends.css}">
+
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -55,7 +57,6 @@
         </div>
 
 
-
     </div>
 
     <!--/*@thymesVar id="fullName" type="com.nikolai.network.dto.UserDto"*/-->
@@ -76,10 +77,10 @@
 
             <hr>
 
-            <div class="count">
+            <div class="countInfo">
 
-                <div>
-                    <span th:text="${user.countFriends}" ></span> <br>
+                <div class="allFriends" style="cursor: pointer" onclick="showModalFriends()">
+                    <span th:text="${friends.size()}" ></span> <br>
                     Friends
                 </div>
 
@@ -89,7 +90,7 @@
                 </div>
 
 <!--                data-bs-toggle="modal" data-bs-target="#myModal"-->
-                <div class="allPhotos" onclick="showModal()">
+                <div class="allPhotos" onclick="showModalPhotos()" style="cursor: pointer">
                     <span th:text="${images.size()}" ></span> <br>
                     Photos
                 </div>
@@ -113,7 +114,6 @@
 
 
 <!--modal edit-->
-
 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -146,7 +146,6 @@
 
     </div>
 </div>
-
 <!--modal edit-->
 
 
@@ -170,18 +169,36 @@
 </div>
 <!--modal gallery-->
 
+<!--modal list friends-->
+<div class="modal fade" id="modalFriends" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+
+            <div class="peopleList">
+                 <div th:each="friend : ${friends}">
+                     <a th:href="@{/friends/profileUser(id=${friend.getId()})}">
+                            <img  th:src="@{'data:image/jpeg;base64,'+${friend.encodeBase64}}"/> <br>
+                            <label th:text="${friend.getFullName()}" style="color: black"></label>
+                     </a>
+                 </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<!--modal list friends-->
+
 <script>
 
-    const addFriend = document.querySelector("addFriend")
-    addFriend.addEventListener('click', function (){
-        addFriend.innerText = 'sent';
-        addFriend.disabled = true;
-    })
-
-
     window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
-    function showModal() {
+    function showModalPhotos() {
         $('#modalGallery').modal('show');
+    }
+
+    function showModalFriends() {
+        $('#modalFriends').modal('show');
     }
 </script>
 

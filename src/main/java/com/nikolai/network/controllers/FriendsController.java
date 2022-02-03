@@ -17,8 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
+
 
 import java.security.Principal;
 import java.util.List;
@@ -61,7 +60,7 @@ public class FriendsController {
 
         User user = userRepository.findByEmail(principal.getName());
 
-        List<UserRequestDto> list = friendsService.listUsersByStatus(user.getId(), StatusFriends.ACCEPTED);
+        List<UserRequestDto> list = friendsService.listMyFriend(user.getId());
 
         model.addAttribute("nameFragment", "findFriend");
         modelAndView.addObject("peoples", list);
@@ -71,7 +70,7 @@ public class FriendsController {
 
 
     @RequestMapping("/searchPeople")
-    public String searchPeople(Model model, Principal principal) {
+    public String searchPeople(Model model) {
 
         model.addAttribute("nameFragment", "findPeople");
 
@@ -80,7 +79,7 @@ public class FriendsController {
 
 
     @PostMapping("/searchPeople")
-    public ModelAndView  searchPeople(Model model, @Param("keyword") String keyword, Principal principal) {
+    public ModelAndView  searchPeople(Model model, @Param("keyword") String keyword) {
         ModelAndView modelAndView = new ModelAndView("friends");
 
         List<UserDto> list = friendsService.search(keyword);
@@ -93,14 +92,23 @@ public class FriendsController {
 
 
     @RequestMapping("/profileUser")
-    public ModelAndView showProfile(@RequestParam Integer id){
+    public ModelAndView showProfile(@RequestParam Integer id, Principal principal){
         ModelAndView modelAndView = new ModelAndView("profile");
 
         UserDto userDto = profileService.findById(id);
 
-        if (userRepository.isMyFriend(id) != null){
-            userDto.setYourFriend(true);
+        User user = userRepository.findByEmail(principal.getName());
+
+        List<UserRequestDto> myFriends = friendsService.listMyFriend(user.getId());
+
+        for (UserRequestDto q : myFriends) {
+            if (q.getId() == id){
+                userDto.setYourFriend(true);
+            }
         }
+
+        List<UserRequestDto> friendsForProfile = friendsService.listMyFriend(id);
+
 
         logger.info("show profile for user with id = " + userDto.getId());
 
@@ -108,8 +116,21 @@ public class FriendsController {
 
         modelAndView.addObject("user", userDto);
         modelAndView.addObject("images", images);
+        modelAndView.addObject("friends", friendsForProfile);
 
         return modelAndView;
+    }
+
+    @RequestMapping("/requestAddFriends")
+    @ResponseBody
+    public String requestAddFriends(@RequestParam Integer toId, Principal principal
+                                   ) {
+
+        System.out.println("toId = " + toId);
+        User userFrom = userRepository.findByEmail(principal.getName());
+        friendsService.requestToFriend(userFrom.getId(), toId);
+
+        return "Request was send!";
     }
 
     @RequestMapping("/incomingFriend")
@@ -120,26 +141,8 @@ public class FriendsController {
         return "friends";
     }
 
-
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    @RequestMapping("/requestAddFriends")
-    public RedirectView requestAddFriends(@RequestParam Integer toId, Principal principal,
-                                          RedirectAttributes redirectAttributes
-                                   ) {
-        User userFrom = userRepository.findByEmail(principal.getName());
-        Integer fromId = userFrom.getId();
-
-        redirectAttributes.addAttribute("id", toId);
-
-        friendsService.requestToFriend(fromId, toId);
-
-        return new RedirectView("peopleList");
-    }
-
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
     @RequestMapping("/acceptedOrIgnoredFriend")
-    public ModelAndView acceptedFriend(@RequestParam Integer id, @RequestParam String state,
+    public ModelAndView acceptedFriend(@RequestParam(name = "id") Integer idFrom, @RequestParam String state,
                                        Principal principal,
                                        Model model){
 
@@ -149,13 +152,13 @@ public class FriendsController {
         Integer idTo = userFrom.getId();
 
         if ("accepted".equals(state)){
-            friendsService.acceptedOrIgnoredFriend(id, idTo, StatusFriends.ACCEPTED);
-            logger.info("accepted friend with id = " + id);
+            friendsService.acceptedOrIgnoredFriend(idFrom, idTo, StatusFriends.ACCEPTED);
+            logger.info("accepted friend with id = " + idFrom);
 
         }
         if ("ignored".equals(state)){
-            friendsService.acceptedOrIgnoredFriend(id, idTo, StatusFriends.IGNORED);
-            logger.info("ignored friend with id = " + id);
+            friendsService.acceptedOrIgnoredFriend(idFrom, idTo, StatusFriends.IGNORED);
+            logger.info("ignored friend with id = " + idFrom);
         }
 
         model.addAttribute("nameFragment", "incomingFriend");

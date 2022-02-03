@@ -49,33 +49,33 @@ public class FriendsServiceImpl extends BaseServiceImpl implements FriendsServic
         User userFrom = userRepository.getById(idFrom);
         User userTo = userRepository.getById(idTo);
 
-        if(friendRepository.findByFirstUserAndSecondUser(userFrom,userTo) != null){
+        if(friendRepository.findByUserFromAndUserTo(userFrom,userTo) != null){
             return false;
         }
 
         Friend friend = new Friend(StatusFriends.WAITING, userFrom, userTo);
         friend.setDate(dateNow());
-
         friendRepository.save(friend);
         return true;
     }
 
     @Override
     public void acceptedOrIgnoredFriend(Integer idFrom, Integer idTo, StatusFriends statusFriends) {
+
         User userFrom = userRepository.getById(idFrom);
         User userTo = userRepository.getById(idTo);
-        Friend friend = friendRepository.findByFirstUserAndSecondUser(userFrom,userTo);
+
+        Friend friend = friendRepository.findByUserFromAndUserTo(userFrom,userTo);
         friend.setStatusFriends(statusFriends);
         friend.setDate(dateNow());
 
         friendRepository.save(friend);
-
     }
 
     @Override
     public List<UserRequestDto> listUsersByStatus(Integer idTo, StatusFriends statusFriends) {
 
-        List<User> list = userRepository.listUsersByStatusFriend(idTo, statusFriends);
+        List<User> list = userRepository.listIncomingRequest(idTo, statusFriends);
 
         List<UserRequestDto> userDtoList = new ArrayList<>();
 
@@ -87,6 +87,25 @@ public class FriendsServiceImpl extends BaseServiceImpl implements FriendsServic
 
     }
 
+    @Override
+    public List<UserRequestDto> listMyFriend(Integer idUser) {
+
+        List<Friend> friendList = friendRepository.listMyFriends(idUser);
+
+        List<UserRequestDto> userRequestDtoList = new ArrayList<>();
+
+        for (Friend q : friendList) {
+            if(q.getUserFrom().getId() == idUser){
+                User user = userRepository.getById(q.getUserTo().getId());
+                userRequestDtoList.add(dtoConvert.convertToUserRequestDto(user));
+            }else if (q.getUserTo().getId() == idUser){
+                User user = userRepository.getById(q.getUserFrom().getId());
+                userRequestDtoList.add(dtoConvert.convertToUserRequestDto(user));
+            }
+        }
+
+        return userRequestDtoList;
+    }
 
 
 }

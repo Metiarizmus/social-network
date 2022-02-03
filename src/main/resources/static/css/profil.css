@@ -51,7 +51,7 @@
     float: right;
 }
 
-.count > div{
+.countInfo > div{
 
     display: inline-block;
     text-align: center;
@@ -79,9 +79,6 @@
     display:inline-block;
 }
 
-.allPhotos:hover {
-    cursor: pointer;
-}
 
 .photosGallery {
     margin-top: 0.5%;
@@ -96,4 +93,19 @@
     max-width: 300px;
     margin-right: 10px;
     margin-bottom: 10px;
+}
+
+.count {
+    border-radius: 50%;
+    background: #a0a0a0;
+    border: 2px solid #a0a0a0;
+    color: #fff;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 2px;
+    float: right;
+}
+
+.friendsList {
+
 }

@@ -2,6 +2,7 @@ package com.nikolai.network.controllers;
 
 import com.nikolai.network.dto.ImageDto;
 import com.nikolai.network.dto.UserDto;
+import com.nikolai.network.dto.UserRequestDto;
 import com.nikolai.network.service.interfaces.FriendsService;
 import com.nikolai.network.service.interfaces.GalleryService;
 import com.nikolai.network.service.interfaces.UserProfileService;
@@ -30,7 +31,8 @@ public class ProfileController{
     @Autowired
     private GalleryService galleryService;
 
-
+    @Autowired
+    private FriendsService friendsService;
     @PostMapping("/saveAvatar")
     public String saveAvatar(@RequestParam("image") MultipartFile file,
                              @RequestParam("email") String email,
@@ -61,6 +63,9 @@ public class ProfileController{
         logger.info("show profile");
 
         UserDto profileUserDto = profileService.getUserDto(principal.getName());
+
+        List<UserRequestDto> list = friendsService.listMyFriend(profileUserDto.getId());
+        map.addAttribute("friends", list);
 
         map.addAttribute("images", images);
         map.addAttribute("user",profileUserDto);

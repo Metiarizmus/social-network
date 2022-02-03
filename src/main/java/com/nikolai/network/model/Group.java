@@ -1,20 +1,21 @@
 package com.nikolai.network.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "associations")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Group extends BaseEntity {
 
-    @Column(name = "name", length = 15)
+    @Column(name = "name", length = 50)
     private String nameGroup;
 
     @Column(name = "avatar", columnDefinition = "BLOB")
@@ -25,16 +26,19 @@ public class Group extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name = "group_user",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")}
+            joinColumns = {@JoinColumn(name = "associations_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}
     )
     private Set<User> groupUsers;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "content_group",
-            joinColumns = {@JoinColumn(name = "content_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")}
-    )
+
+    @OneToMany(mappedBy = "group")
     private Set<ContentGroup> contentGroups;
 
+
+    public Group(String nameGroup, byte[] avatar, Integer createrId) {
+        this.nameGroup = nameGroup;
+        this.avatar = avatar;
+        this.createrId = createrId;
+    }
 }

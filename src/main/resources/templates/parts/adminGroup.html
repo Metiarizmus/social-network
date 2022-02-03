@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<div th:fragment="adminGroup">
+
+    <div class="content__group">
+
+        <div class="gr__head">
+            <lable class="gr__name" th:text="${group.name}"></lable>
+
+            <button th:if="${userCreater.getEmail() == #authentication.name}" type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+                    data-bs-target="#modalAddContent">Add post
+            </button>
+
+        </div>
+
+        <!--/*@thymesVar id="textContent" type="com.nikolai.network.dto.ContentGroupDto"*/-->
+        <div class="content" style="margin-top: 5%" th:each="cont : ${content}">
+            <div th:text="${cont.time}" style="margin-left: 70%; background-color: #9d9c9c"></div>
+            <div th:text="${cont.textContent}"></div>
+
+            <div th:if="${cont.encodeBase64} != ''">  <img class="imag" src="" alt="" th:src="@{'data:image/jpeg;base64,'+${cont.encodeBase64}}"></div>
+
+        </div>
+
+
+    </div>
+
+    <div class="modal fade" id="modalAddContent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content modal-lg">
+
+                <div class="modal-header">
+                    <h6 class="modal-title" id="exampleModalLabel">Add new post in group</h6>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <form method="post" th:action="@{/groups/addContentGroup(idGroup=${group.id})}" id="contentGroupId" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <textarea name="textContent" id="" cols="50" rows="10"></textarea>
+
+                        <input type="file"  id="image" name="fileContent" />
+
+                    </div>
+                </form>
+
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" form="contentGroupId">Add post</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,150 @@
+
+/*page groups*/
+.fragmentsGroup {
+    width: 40%;
+}
+.findGroup {
+    background-color: white;
+    padding: 2% 2% 4%;
+    margin-bottom: 1%;
+}
+.groupsList {
+    background-color: white;
+    padding: 4%;
+}
+.asideGroup {
+    background-color: white;
+    padding: 0.5%;
+}
+/*page groups*/
+
+
+
+
+/*modal managment*/
+.group span {
+    display: inline-block;
+}
+.controlGroups .group {
+    padding-left: 10%;
+}
+.lableGroup ul {
+    list-style-type: none;
+}
+.controlGroups img{
+    height: 120px;
+    width: 120px;
+    object-fit: cover;
+    border-radius: 100px;
+}
+.group a {
+    text-decoration: none;
+    color: #666;
+}
+.group:hover {
+    cursor: pointer;
+    background-color: #878282;
+
+
+}
+
+.lableGroup:hover {
+    text-decoration: none;
+    color: #666;
+}
+/*modal managment*/
+
+
+
+/*adminGroup*/
+
+.content__group div {
+    background-color: #ffffff;
+    padding: 2%;
+}
+
+.content img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gr__head button {
+    margin-left: 60%;
+}
+
+.avatarGroup {
+    padding: 20px;
+    width: 100%;
+    height: 400px;
+    background-color: rgb(255, 255, 255);
+    outline: 1px solid rgb(218, 214, 214);
+}
+
+.avatarGroup img{
+    margin-bottom: 10px;
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.peoples {
+    margin-top: 8%;
+    padding: 20px;
+    background-color: white;
+}
+
+/*adminGroup*/
+
+
+/*list group my subscr*/
+.mySubscrGroup {
+    padding: 2%;
+    text-decoration: none;
+
+}
+
+.mySubscrGroup a {
+    text-decoration: none;
+    color: #666;
+}
+
+
+
+.mySubscrGroup img {
+    height: 120px;
+    width: 120px;
+    object-fit: cover;
+
+}
+
+.mySubscrGroup div:hover {
+    cursor: pointer;
+     background-color: #878282;
+    text-decoration: none;
+    color: #666;
+}
+
+/*list group my subscr*/
+
+
+/*people subscribers*/
+
+.subcriber  {
+    margin: 1%;
+}
+
+.peoples div {
+    display: inline-block;
+}
+
+.subcriber img {
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    border-radius: 100px;
+
+}
+
+
+/*people subscribers*/

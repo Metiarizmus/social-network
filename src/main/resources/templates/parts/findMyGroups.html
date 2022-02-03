@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+        <div class="findMyGroups" th:fragment="findMyGroups">
+            <div class="findGroup">
+
+                <lable> All groups:</lable>
+                <button  type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#myModal" style="margin-left: 50%" >Create group</button>
+                <input type="text" id="filter" size="25" placeholder="Enter name or lastname" style="margin-top: 6%">
+            </div>
+
+            <div class="groupsList">
+
+                <div class="mySubscrGroup" id="mySubscrGroup" th:each="group : ${myGroups}">
+
+                    <a th:href="@{/groups/showProfileGroup(id = ${group.getId()})}">
+                        <div>
+                            <img src="" alt="" th:src="@{'data:image/jpeg;base64,'+${group.encodeBase64}}">
+
+                            <lable th:text="${group.name}"></lable>
+                            <hr>
+                        </div>
+                    </a>
+
+
+
+                </div>
+
+
+            </div>
+
+
+            <!--modal create new group-->
+            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Creat new group</h5>
+
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <form method="post" th:action="@{/groups/createNew}"  id="formCreatGroup" enctype="multipart/form-data">
+
+                            <div class="modal-body">
+
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <div class="form-outline flex-fill mb-0">
+                                        <input type="text" id="form3Example3c"  name="name" class="form-control" placeholder="Group name"/>
+                                    </div>
+
+                                </div>
+
+                                <input type="file" class="form-control" name="image" id="image" required="required">
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" id="submit" class="btn btn-outline-success" form="formCreatGroup">Save changes
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <!--modal create new group-->
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+            <script>
+
+                $("#filter").keyup(function() {
+
+                    var filter = $(this).val(),
+                        count = 0;
+
+                    $('#mySubscrGroup div').each(function() {
+
+                        // If the list item does not contain the text phrase fade it out
+                        if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                            $(this).hide();  // MY CHANGE
+
+                            // Show the list item if the phrase matches and increase the count by 1
+                        } else {
+                            $(this).show(); // MY CHANGE
+                            count++;
+                        }
+
+                    });
+
+                });
+            </script>
+
+        </div>
+
+</body>
+</html>

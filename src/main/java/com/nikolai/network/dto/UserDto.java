@@ -17,8 +17,8 @@ public class UserDto {
     private String email;
 
     private Integer countRequestUser;
-    private Integer countMessages = 0;
+    private Integer countMessages;
     private Integer countFriends;
-    private Integer countSubscribers;
+    private Integer countSubscribers = 11;
     private boolean isYourFriend = false;
 }
