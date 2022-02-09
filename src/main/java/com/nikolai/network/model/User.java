@@ -1,8 +1,11 @@
 package com.nikolai.network.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -41,19 +44,28 @@ public class User extends BaseEntity {
     )
     private Set<Role> roles;
 
-    @ManyToMany(mappedBy = "groupUsers")
+    @ManyToMany(mappedBy = "groupUsers", cascade ={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<Group> groups;
 
     @OneToMany(mappedBy = "user")
     private Set<Image> images;
-
-    @OneToMany(mappedBy = "user")
-    private Set<ConversationReply> message;
 
     @OneToOne(mappedBy = "userFrom")
     private Friend friendFrom;
 
     @OneToOne(mappedBy = "userTo")
     private Friend friendTo;
+
+    @OneToOne(mappedBy = "user_from")
+    private Messages mess_from;
+
+    @OneToOne(mappedBy = "user_to")
+    private Messages mess_to;
+
+    @OneToMany(mappedBy = "user")
+    private Set<TeamMessages> teamMessages;
+
+    @OneToMany(mappedBy = "user")
+    private Set<TeamMembers> teamMembers;
 
 }

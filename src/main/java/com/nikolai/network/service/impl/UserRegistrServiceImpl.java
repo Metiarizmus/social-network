@@ -1,6 +1,5 @@
 package com.nikolai.network.service.impl;
 
-import com.nikolai.network.dto.UserRegistrDto;
 import com.nikolai.network.enums.EnumRoles;
 import com.nikolai.network.model.Role;
 import com.nikolai.network.model.User;
@@ -15,8 +14,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,13 +36,9 @@ public class UserRegistrServiceImpl extends BaseServiceImpl implements UserRegis
         return userRepository.findByEmail(email);
     }
 
-    public User saveUser(UserRegistrDto userRegistrDto) {
-        User user = new User();
-        user.setFirstName(userRegistrDto.getFirstName());
-        user.setLastName(userRegistrDto.getLastName());
-        user.setEmail(userRegistrDto.getEmail());
-        user.setPassword(passwordEncoder.encode(userRegistrDto.getPassword()));
-        user.setBirthday(convertDateToFormat(userRegistrDto.getBirthday()));
+    public User saveUser(User user) {
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setDate(dateNow());
         user.setRoles(Collections.singleton(new Role(EnumRoles.ROLE_USER)));
 

@@ -3,6 +3,7 @@ package com.nikolai.network.controllers;
 import com.nikolai.network.dto.ContentGroupDto;
 import com.nikolai.network.dto.GroupDto;
 import com.nikolai.network.dto.UserDto;
+import com.nikolai.network.enums.ActionWithGroup;
 import com.nikolai.network.enums.StatusFriends;
 import com.nikolai.network.model.ContentGroup;
 import com.nikolai.network.model.Group;
@@ -28,14 +29,13 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 
 @Controller
 @RequestMapping("/groups")
-public class GroupsController {
+public class GroupsController extends GeneralController{
 
     @Autowired
     private FriendsService friendsService;
@@ -55,8 +55,6 @@ public class GroupsController {
     @ModelAttribute
     private void generalAttribute(Principal principal, Model model) {
         UserDto userDto = friendsService.getUserDto(principal.getName());
-        model.addAttribute("user", userDto);
-        model.addAttribute("requestUser", friendsService.listUsersByStatus(userDto.getId(), StatusFriends.WAITING));
 
         model.addAttribute("mangmGroups", groupService.listMyControllingGroups(userDto.getId()));
     }
@@ -74,13 +72,11 @@ public class GroupsController {
     }
 
     @PostMapping("/createNew")
-    public ModelAndView addNew( Principal principal,
+    public String addNew( Principal principal,
                          @RequestParam("image") MultipartFile file,
                          @RequestParam("name") String name
                          ) {
         User user = userRepository.findByEmail(principal.getName());
-
-        ModelAndView modelAndView = new ModelAndView("groups");
 
         Group group = null;
         try {
@@ -90,8 +86,7 @@ public class GroupsController {
             e.printStackTrace();
         }
 
-
-        return modelAndView;
+        return "redirect:/groups";
     }
 
     @RequestMapping("/showProfileGroup")
@@ -108,7 +103,6 @@ public class GroupsController {
         map.addAttribute("group",  groupService.adminModeGroup(group));
         map.addAttribute("content", list);
         map.addAttribute("subscribers", groupService.listSubscribersUserForGroup(group));
-
 
         return "groups";
     }
@@ -138,7 +132,7 @@ public class GroupsController {
        groupContentImpl.saveGroupContent(contentGroup);
 
         redirectAttributes.addAttribute("id", idGroup);
-        return new RedirectView("adminMode");
+        return new RedirectView("showProfileGroup");
 
     }
 
@@ -170,19 +164,38 @@ public class GroupsController {
         return new RedirectView("showProfileGroup");
     }
 
-    @RequestMapping("/subscribe")
-    public RedirectView subscribe(@RequestParam Integer idGroup,RedirectAttributes redirectAttributes, Principal principal) {
+
+    @RequestMapping("/actionGroup")
+    public RedirectView groupsAction(@RequestParam Integer idGroup,@RequestParam String action,
+                                     RedirectAttributes redirectAttributes, Principal principal) {
+
         User user = userRepository.findByEmail(principal.getName());
         Group group =  groupRepository.getById(idGroup);
-
-        group.getGroupUsers().add(user);
-
-
-        groupRepository.save(group);
-
-
         redirectAttributes.addAttribute("id", idGroup);
-        return new RedirectView("showProfileGroup");
+
+
+        if (action.equals("SUBSCRIBE")){
+            groupService.actionWithGroup(user,group, ActionWithGroup.SUBSCRIBE);
+
+            return new RedirectView("showProfileGroup");
+        }
+        else if (action.equals("UNSUBSCRIBE")){
+            groupService.actionWithGroup(user, group, ActionWithGroup.UNSUBSCRIBE);
+
+            return new RedirectView("showProfileGroup");
+
+        } else {
+            groupService.actionWithGroup(user, group, ActionWithGroup.DELETE);
+
+            return new RedirectView("groups");
+
+        }
+
+
     }
 
+
+
+
 }
+

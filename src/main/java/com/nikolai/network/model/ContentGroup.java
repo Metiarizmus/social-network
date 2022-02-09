@@ -20,7 +20,7 @@ public class ContentGroup extends BaseEntity{
     @Column(name = "file_content", columnDefinition = "LONGBLOB")
     private byte[] fileContent;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "group_id")
     private Group group;
 

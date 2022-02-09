@@ -21,7 +21,7 @@ import java.security.Principal;
 import java.util.*;
 
 @Controller
-public class ProfileController{
+public class ProfileController extends GeneralController{
 
     private static final Logger logger = LoggerFactory.getLogger(ProfileController.class);
 

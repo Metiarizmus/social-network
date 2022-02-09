@@ -11,4 +11,6 @@ public interface GroupContentRepository extends JpaRepository<ContentGroup, Inte
 
     List<ContentGroup> findByGroup(Group group);
 
+
+
 }

@@ -19,6 +19,6 @@ public class UserDto {
     private Integer countRequestUser;
     private Integer countMessages;
     private Integer countFriends;
-    private Integer countSubscribers = 11;
+    private Integer countSubscribers;
     private boolean isYourFriend = false;
 }

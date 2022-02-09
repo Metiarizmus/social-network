@@ -18,21 +18,21 @@ public class Group extends BaseEntity {
     @Column(name = "name", length = 50)
     private String nameGroup;
 
-    @Column(name = "avatar", columnDefinition = "BLOB")
+    @Column(name = "avatar", columnDefinition = "LONGBLOB")
     private byte[] avatar;
 
     @Column(name = "creater_id")
     private Integer createrId;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.LAZY, cascade ={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "group_user",
             joinColumns = {@JoinColumn(name = "associations_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}
+            inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id"),}
     )
     private Set<User> groupUsers;
 
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", cascade = {CascadeType.REMOVE})
     private Set<ContentGroup> contentGroups;
 
 
@@ -41,4 +41,5 @@ public class Group extends BaseEntity {
         this.avatar = avatar;
         this.createrId = createrId;
     }
+
 }

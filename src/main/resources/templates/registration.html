@@ -55,11 +55,9 @@
                                         </div>
                                     </div>
 
-
-                                    <div class="alert alert-warning" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></div>
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="date" class="form-control"  id="form3Example3c" th:field="*{birthday}"  placeholder="birthday"/>
+                                            <input type="text" class="form-control" name="birthday" th:field="*{birthday}" pattern="\d{1,2}-\d{1,2}-\d{4}" placeholder="dd-mm-yyyy"/>
                                         </div>
                                     </div>
 

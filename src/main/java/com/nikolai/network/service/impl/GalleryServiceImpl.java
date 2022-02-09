@@ -52,7 +52,7 @@ public class GalleryServiceImpl extends BaseServiceImpl implements GalleryServic
 
         for (Image q : images) {
             try {
-                imageDtos.add(dtoConvert.convertToRegistrDto(q));
+                imageDtos.add(dtoConvert.convertToImageDto(q));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }

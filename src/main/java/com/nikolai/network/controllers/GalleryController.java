@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Random;
 
 @Controller
-public class GalleryController{
+public class GalleryController extends GeneralController{
 
     private static final Logger logger = LoggerFactory.getLogger(GalleryController.class);
 

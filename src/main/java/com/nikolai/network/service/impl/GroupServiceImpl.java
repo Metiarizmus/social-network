@@ -3,6 +3,7 @@ package com.nikolai.network.service.impl;
 import com.nikolai.network.dto.GroupDto;
 import com.nikolai.network.dto.UserDto;
 import com.nikolai.network.dto.UserRequestDto;
+import com.nikolai.network.enums.ActionWithGroup;
 import com.nikolai.network.model.Group;
 import com.nikolai.network.model.User;
 import com.nikolai.network.repository.GroupRepository;
@@ -16,7 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-public class GroupServiceImpl extends BaseServiceImpl{
+public class GroupServiceImpl extends BaseServiceImpl {
 
     @Autowired
     private GroupRepository groupRepository;
@@ -37,7 +38,7 @@ public class GroupServiceImpl extends BaseServiceImpl{
 
         List<GroupDto> groupDtos = new ArrayList<>();
 
-        for (Group q : groupRepository.findByCreaterId(id)){
+        for (Group q : groupRepository.findByCreaterId(id)) {
             groupDtos.add(dtoConvert.convertToGroupDto(q));
         }
 
@@ -48,15 +49,15 @@ public class GroupServiceImpl extends BaseServiceImpl{
         return dtoConvert.convertToGroupDto(group);
     }
 
-    public List<GroupDto> findNewGroup(String keyword){
+    public List<GroupDto> findNewGroup(String keyword) {
         List<Group> groups = new ArrayList<>();
 
-        if(keyword != null) {
+        if (keyword != null) {
             groups.addAll(groupRepository.search(keyword));
         }
         List<GroupDto> groupDtos = new ArrayList<>();
 
-        for (Group q : groups){
+        for (Group q : groups) {
             groupDtos.add(dtoConvert.convertToGroupDto(q));
         }
 
@@ -64,11 +65,11 @@ public class GroupServiceImpl extends BaseServiceImpl{
 
     }
 
-    public List<GroupDto> listMyGroups(User user){
+    public List<GroupDto> listMyGroups(User user) {
 
         List<GroupDto> list = new ArrayList<>();
 
-        for (Group q : groupRepository.findByGroupUsers(user)){
+        for (Group q : groupRepository.findByGroupUsers(user)) {
             list.add(dtoConvert.convertToGroupDto(q));
         }
 
@@ -87,4 +88,28 @@ public class GroupServiceImpl extends BaseServiceImpl{
 
     }
 
+
+
+    public void actionWithGroup(User user, Group group, ActionWithGroup action) {
+        if(ActionWithGroup.DELETE.equals(action)) {
+            GroupDto groupDto = dtoConvert.convertToGroupDto(group);
+
+            if (listMyControllingGroups(user.getId()).contains(groupDto)) {
+                groupRepository.delete(group);
+            }
+        }
+
+        if (ActionWithGroup.SUBSCRIBE.equals(action)) {
+            group.getGroupUsers().add(user);
+            groupRepository.save(group);
+        }
+
+        if (ActionWithGroup.UNSUBSCRIBE.equals(action)) {
+            if(group.getGroupUsers().contains(user)) {
+                group.getGroupUsers().remove(user);
+                groupRepository.save(group);
+            }
+        }
+
+    }
 }

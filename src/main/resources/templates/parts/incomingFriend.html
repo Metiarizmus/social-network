@@ -15,7 +15,8 @@
     <div class="peopleList" >
 
         <div class="people" th:each="people, state : ${requestUser}">
-            <a th:href="@{/friends/peopleList(id=${people.getId()})}">
+
+            <a th:href="@{/friends/profileUser(id=${people.getId()})}">
                 <img  th:src="@{'data:image/jpeg;base64,'+${people.encodeBase64}}" style=""/> <br>
                 <label th:text="${people.getFullName()}" style="color: black"></label><br>
             </a>

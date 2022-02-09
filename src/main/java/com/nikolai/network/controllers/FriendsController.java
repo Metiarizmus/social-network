@@ -24,7 +24,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = "/friends")
-public class FriendsController {
+public class FriendsController extends GeneralController {
 
     private static final Logger logger = LoggerFactory.getLogger(FriendsController.class);
 
@@ -41,12 +41,6 @@ public class FriendsController {
     @Autowired
     private UserRepository userRepository;
 
-    @ModelAttribute
-    private void generalAttribute(Principal principal, Model model) {
-        UserDto userDto = friendsService.getUserDto(principal.getName());
-        model.addAttribute("user", userDto);
-        model.addAttribute("requestUser", friendsService.listUsersByStatus(userDto.getId(), StatusFriends.WAITING));
-    }
 
     @GetMapping
     public String show() {
@@ -97,9 +91,9 @@ public class FriendsController {
 
         UserDto userDto = profileService.findById(id);
 
-        User user = userRepository.findByEmail(principal.getName());
+        User userAuthen = userRepository.findByEmail(principal.getName());
 
-        List<UserRequestDto> myFriends = friendsService.listMyFriend(user.getId());
+        List<UserRequestDto> myFriends = friendsService.listMyFriend(userAuthen.getId());
 
         for (UserRequestDto q : myFriends) {
             if (q.getId() == id){
@@ -114,6 +108,7 @@ public class FriendsController {
 
         List<ImageDto> images = galleryService.getAllImageForUser(userDto.getEmail());
 
+        modelAndView.addObject("userAuthen", userAuthen);
         modelAndView.addObject("user", userDto);
         modelAndView.addObject("images", images);
         modelAndView.addObject("friends", friendsForProfile);

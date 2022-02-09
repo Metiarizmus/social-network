@@ -8,6 +8,7 @@ import com.nikolai.network.utils.DtoConvert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
@@ -24,13 +25,6 @@ public class BaseServiceImpl implements BaseService {
     public String dateNow() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         String format = formatter.format(new Date());
-        return format;
-    }
-
-
-    public String convertDateToFormat(Date date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        String format = formatter.format(date);
         return format;
     }
 

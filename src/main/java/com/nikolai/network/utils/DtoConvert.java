@@ -36,9 +36,6 @@ public class DtoConvert {
     @Autowired
     private FriendRepository friendRepository;
 
-    public UserRegistrDto convertToRegistrDto(User user) {
-        return modelMapper.map(user, UserRegistrDto.class);
-    }
 
     public UserDto convertToUserDto(User user) {
         UserDto userDto = modelMapper.map(user, UserDto.class);
@@ -74,17 +71,18 @@ public class DtoConvert {
         content.setTextContent(contentGroup.getContent());
         content.setEncodeBase64(convertBinImageToString(content.getFileContent()));
         content.setTime(contentGroup.getDate());
+        content.setGroupDto(convertToGroupDto(contentGroup.getGroup()));
+
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         Date date = formatter.parse(contentGroup.getDate());
         content.setTimeCompare(date);
 
-
         return content;
     }
 
 
-    public ImageDto convertToRegistrDto(Image image) throws UnsupportedEncodingException {
+    public ImageDto convertToImageDto(Image image) throws UnsupportedEncodingException {
 
         BufferedImage bufferedImage = null;
         byte[] bytesImage = null;

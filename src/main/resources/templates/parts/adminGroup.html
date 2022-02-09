@@ -24,12 +24,21 @@
 
         <!--/*@thymesVar id="textContent" type="com.nikolai.network.dto.ContentGroupDto"*/-->
         <div class="content" style="margin-top: 5%" th:each="cont : ${content}">
-            <div th:text="${cont.time}" style="margin-left: 70%; background-color: #9d9c9c"></div>
+
+            <span>  <img class="avatarGroup" src="" alt="" th:src="@{'data:image/jpeg;base64,'+${cont.getGroupDto().getEncodeBase64()}}"></span>
+
+            <label th:text="${cont.getGroupDto().getName()}" style="margin-left: 10px"></label>
+
+            <span th:text="${cont.time}" style="float: right; background-color: #9d9c9c"></span>
+            <hr>
+
             <div th:text="${cont.textContent}"></div>
 
             <div th:if="${cont.encodeBase64} != ''">  <img class="imag" src="" alt="" th:src="@{'data:image/jpeg;base64,'+${cont.encodeBase64}}"></div>
 
         </div>
+
+
 
 
     </div>

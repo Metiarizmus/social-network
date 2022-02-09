@@ -27,13 +27,24 @@
       </li>
 
       <li class="nav-item">
-        <a th:href="@{/messages}" class="nav-link">
+        <a th:href="@{/chat}" class="nav-link">
           <i class="fas fa-comments" ></i> <span class="ms-1 d-none d-sm-inline">Messenger <label th:if="${user.countMessages > 0}" th:text="${user.countMessages}" class="count" ></label></span> </a>
       </li>
 
+
+<!--      ${#authentication.name} == ${userAuthen.getEmail()}-->
+
+
       <li class="nav-item">
         <a th:href="@{/friends}" class="nav-link">
-          <i class="fas fa-user-friends"></i> <span class="ms-1 d-none d-sm-inline">Friends <label th:if="${user.countRequestUser > 0}" th:text="${user.countRequestUser}" class="count"></label></span> </a>
+          <i class="fas fa-user-friends"></i> <span class="ms-1 d-none d-sm-inline">Friends
+
+          <span  th:if="${userAuthen} == null">
+             <label th:if="${user.countRequestUser > 0}" th:text="${user.countRequestUser}" class="count"> </label>
+          </span >
+
+
+        </span> </a>
       </li>
 
       <li class="nav-item">

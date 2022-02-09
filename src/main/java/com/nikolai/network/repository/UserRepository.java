@@ -28,4 +28,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     //select * from user join group_user on user.id=group_user.user_id join associations on  associations.id=group_user.associations_id where associations.id=10;
     List<User> findAllByGroups(Group group);
 
+
 }

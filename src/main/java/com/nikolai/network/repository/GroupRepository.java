@@ -16,4 +16,9 @@ public interface GroupRepository extends JpaRepository<Group, Integer> {
     List<Group> search(String keyword);
 
     List<Group> findByGroupUsers(User user);
+
+    void delete(Group group);
+
+
+
 }

@@ -2,8 +2,10 @@ package com.nikolai.network.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class GroupDto {
+public class GroupDto implements Serializable {
     private Integer id;
     private String name;
     private byte[] avatar;

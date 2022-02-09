@@ -76,27 +76,21 @@
                         Edit
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" style="text-align: center">
-                        <li>
-                            <button th:if="${userCreater.getEmail() == #authentication.name}" class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#myModal">
-                                Change avatar
-                            </button>
-
-                        </li>
 
                         <li>
-                            <a th:if="${userCreater.getEmail() != #authentication.name}" th:href="@{/groups/subscribe(idGroup=${group.getId()})}" class="dropdown-item" style="cursor: pointer">
+                            <a th:if="${userCreater.getEmail() != #authentication.name}" th:href="@{/groups/actionGroup(idGroup=${group.getId()}, action = 'SUBSCRIBE')}" class="dropdown-item" style="cursor: pointer">
                                 Subscribe
                             </a>
                         </li>
 
                         <li>
-                            <a th:if="${userCreater.getEmail() != #authentication.name}" class="dropdown-item" style="cursor: pointer">
+                            <a th:if="${userCreater.getEmail() != #authentication.name}" th:href="@{/groups/actionGroup(idGroup=${group.getId()}, action = 'UNSUBSCRIBE')}" class="dropdown-item" style="cursor: pointer">
                                 Unsubscribe
                             </a>
                         </li>
 
                         <li>
-                            <a th:if="${userCreater.getEmail() == #authentication.name}" class="dropdown-item" style="cursor: pointer">
+                            <a th:if="${userCreater.getEmail() == #authentication.name}" th:href="@{/groups/actionGroup(idGroup = ${group.getId()}, action ='DELETE')}" class="dropdown-item" style="cursor: pointer">
                                 Delete
                             </a>
                         </li>

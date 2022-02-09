@@ -15,10 +15,10 @@ import java.util.List;
 @Data
 public class Image extends BaseEntity{
 
-    @Column(name = "name", length = 50)
+    @Column(name = "name", length = 100)
     private String name;
 
-    @Column(name = "location", length = 50)
+    @Column(name = "location", length = 100)
     private String location;
 
     @Enumerated(EnumType.STRING)
