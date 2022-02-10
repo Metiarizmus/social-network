@@ -36,3 +36,11 @@
     cursor: pointer;
     background-color: #cbc3c3;
 }
+
+.room {
+    height: 38em;
+}
+
+.contentChat {
+    height: 90%;
+}

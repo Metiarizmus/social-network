@@ -56,16 +56,10 @@ public class User extends BaseEntity {
     @OneToOne(mappedBy = "userTo")
     private Friend friendTo;
 
-    @OneToOne(mappedBy = "user_from")
-    private Messages mess_from;
+    @OneToOne(mappedBy = "sender")
+    private ChatMessage sender;
 
-    @OneToOne(mappedBy = "user_to")
-    private Messages mess_to;
-
-    @OneToMany(mappedBy = "user")
-    private Set<TeamMessages> teamMessages;
-
-    @OneToMany(mappedBy = "user")
-    private Set<TeamMembers> teamMembers;
+    @OneToOne(mappedBy = "recipient")
+    private ChatMessage recipient;
 
 }
