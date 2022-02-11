@@ -1,37 +1,45 @@
 package com.nikolai.network.controllers;
 
-import com.nikolai.network.model.ChatMessage;
-import com.nikolai.network.model.ChatNotification;
+import com.nikolai.network.dto.MessageDto;
+import com.nikolai.network.dto.MessageResponseDto;
+import com.nikolai.network.model.Messages;
 import com.nikolai.network.model.User;
 import com.nikolai.network.repository.UserRepository;
-import com.nikolai.network.service.impl.ChatMessageServiceImpl;
-import com.nikolai.network.service.impl.ChatRoomServiceImpl;
+import com.nikolai.network.service.impl.MessageServiceImpl;
 import com.nikolai.network.service.interfaces.FriendsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
+import java.util.Map;
 
 @Controller
+@CrossOrigin
 public class ChatController extends GeneralController {
     @Autowired
     private FriendsService friendsService;
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
-    private SimpMessagingTemplate messagingTemplate;
-    @Autowired
-    private ChatMessageServiceImpl chatMessageService;
-    @Autowired
-    private ChatRoomServiceImpl chatRoomService;
+    private MessageServiceImpl messageService;
+
+    @Autowired private SimpMessagingTemplate messagingTemplate;
+
+
+    private static final Logger logger = LoggerFactory.getLogger(ChatController.class);
 
 
     @RequestMapping("/mess")
@@ -43,42 +51,29 @@ public class ChatController extends GeneralController {
         return "chat";
     }
 
-    @MessageMapping("/chat")
-    public void processMessage(@Payload ChatMessage chatMessage) {
-        var chatId = chatRoomService
-                .getChatId(chatMessage.getSender().getId(), chatMessage.getRecipient().getId(), true);
-        chatMessage.setChatId(chatId.get());
 
-        ChatMessage saved = chatMessageService.save(chatMessage);
+    @MessageMapping("/chat/{to}")
+    public void sendMessagePersonal(@DestinationVariable("to") Integer to, MessageDto message) {
 
-        messagingTemplate.convertAndSendToUser(
-                String.valueOf(chatMessage.getRecipient().getId()), "/queue/messages",
-                new ChatNotification(
-                        saved.getId(),
-                        saved.getSender().getId(),
-                        saved.getSenderName()));
+        logger.info("send message from " + message.getFromLogin() + " to id = " + to);
+
+        var chatId = message.getIdTopic();
+
+        messageService.sendMessage(to,message);
+
+        messagingTemplate.convertAndSend("/topic/messages/" + chatId,message);
     }
 
-    @GetMapping("/messages/{senderId}/{recipientId}/count")
-    public ResponseEntity<Long> countNewMessages(
-            @PathVariable Integer senderId,
-            @PathVariable Integer recipientId) {
 
-        return ResponseEntity
-                .ok(chatMessageService.countNewMessages(senderId, recipientId));
-    }
+    @GetMapping("/mess/listmessage/{from}/{to}")
+    public @ResponseBody List<MessageResponseDto> getListMessageChat(@PathVariable("from") Integer from, @PathVariable("to") Integer to){
 
-    @GetMapping("/messages/{senderId}/{recipientId}")
-    public ResponseEntity<?> findChatMessages(@PathVariable Integer senderId,
-                                              @PathVariable Integer recipientId) {
-        return ResponseEntity
-                .ok(chatMessageService.findChatMessages(senderId, recipientId));
-    }
+        List<MessageResponseDto> list = messageService.getListMessage(from, to);
 
-    @GetMapping("/messages/{id}")
-    public ResponseEntity<?> findMessage(@PathVariable Integer id) {
-        return ResponseEntity
-                .ok(chatMessageService.findById(id));
+        logger.info("all messages between users");
+
+        return list;
+
     }
 
 }

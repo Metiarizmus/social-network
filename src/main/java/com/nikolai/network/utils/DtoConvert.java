@@ -2,10 +2,7 @@ package com.nikolai.network.utils;
 
 import com.nikolai.network.dto.*;
 import com.nikolai.network.enums.StatusFriends;
-import com.nikolai.network.model.ContentGroup;
-import com.nikolai.network.model.Group;
-import com.nikolai.network.model.Image;
-import com.nikolai.network.model.User;
+import com.nikolai.network.model.*;
 import com.nikolai.network.repository.FriendRepository;
 import com.nikolai.network.repository.UserRepository;
 import lombok.SneakyThrows;
@@ -63,6 +60,15 @@ public class DtoConvert {
         groupDto.setCountPeople(userRepository.countSubscribersInGroup(groupDto.getId()));
         groupDto.setDate(group.getDate());
         return groupDto;
+    }
+
+
+    public MessageResponseDto convertToMessageDto(Messages messages) {
+        MessageResponseDto messageDto = modelMapper.map(messages, MessageResponseDto.class);
+        messageDto.setMessage(messages.getMess());
+        messageDto.setTo(messages.getRecipient().getId());
+        messageDto.setFromLogin(messages.getSender().getId());
+        return messageDto;
     }
 
     @SneakyThrows

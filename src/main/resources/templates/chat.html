@@ -11,9 +11,9 @@
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/friends.css}">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="/webjars/jquery/jquery.min.js"></script>
-    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
-    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
 
@@ -29,14 +29,14 @@
 
     <div th:replace="parts/aside :: aside"></div>
 
-    <div class="list__friends">
+    <div class="list__friends" style="margin-right: 0.1em">
 
         <input type="text" id="filter"  class="filter" placeholder="Enter name or lastname" autocomplete="off">
 
-        <hr>
+        <hr style="margin-top: 0.3em">
 
         <div class="list" id="listMyFriend" th:each="fr : ${friends}" >
-            <div class="friend" style="display: none" th:attr="onclick=|createRoom('${fr.getId()}')|">
+            <div class="friend" th:attr="onclick=|connectToChat('${fr.getId()}','${fr.getFullName()}')|" >
                 <img src="" alt="" th:src="@{'data:image/jpeg;base64,'+${fr.encodeBase64}}">
 
                 <lable th:text="${fr.fullName}"></lable>
@@ -53,9 +53,29 @@
 </div>
 
 
+<script>
+    $("#filter").keyup(function() {
 
+        var filter = $(this).val(),
+            count = 0;
 
-<script th:src="@{../static/js/chat.js}"></script>
+        $('#listMyFriend div').each(function() {
+
+            // If the list item does not contain the text phrase fade it out
+            if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                $(this).hide();  // MY CHANGE
+
+                // Show the list item if the phrase matches and increase the count by 1
+            } else {
+                $(this).show(); // MY CHANGE
+                count++;
+            }
+
+        });
+
+    });
+</script>
+
 <script th:src="@{../static/js/ws.js}"></script>
 <script src="https://kit.fontawesome.com/39221df667.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

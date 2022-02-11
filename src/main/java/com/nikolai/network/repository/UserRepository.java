@@ -25,7 +25,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(value = "select count(user.id) from user join group_user on user.id=group_user.user_id join associations on associations.id=group_user.associations_id where associations.id = ?1", nativeQuery = true)
     Integer countSubscribersInGroup(Integer id);
 
-    //select * from user join group_user on user.id=group_user.user_id join associations on  associations.id=group_user.associations_id where associations.id=10;
     List<User> findAllByGroups(Group group);
 
 

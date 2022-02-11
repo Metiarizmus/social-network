@@ -8,4 +8,5 @@ public class UserRequestDto {
     private String fullName;
     private byte[] avatar;
     private String encodeBase64;
+    private String email;
 }

@@ -44,6 +44,7 @@ public class User extends BaseEntity {
     )
     private Set<Role> roles;
 
+
     @ManyToMany(mappedBy = "groupUsers", cascade ={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<Group> groups;
 
@@ -56,10 +57,12 @@ public class User extends BaseEntity {
     @OneToOne(mappedBy = "userTo")
     private Friend friendTo;
 
+
+
     @OneToOne(mappedBy = "sender")
-    private ChatMessage sender;
+    private Messages sender;
 
     @OneToOne(mappedBy = "recipient")
-    private ChatMessage recipient;
+    private Messages recipient;
 
 }

@@ -8,18 +8,27 @@
 </head>
 <body>
 
-    <div class="room" th:fragment="room">
-        <div class="headerChat">
+    <div class="room" th:fragment="room" >
+
+        <div class="headerChat" id="nameRecipient">
 
         </div>
 
-        <div class="contentChat">
+
+        <div class="contentChat" id="contentChatId">
 
         </div>
 
-        <hr>
 
-        <input type="text">
+
+        <div class="footer">
+            <textarea name="textAreaMess" cols="80" rows="2" id="sendMess"></textarea>
+        </div>
+
+
+
+        <span id="currentEmailUser" th:text="${user.getId()}" style="display: none"></span>
+
     </div>
 
 </body>
