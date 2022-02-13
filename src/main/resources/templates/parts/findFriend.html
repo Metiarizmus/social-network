@@ -5,13 +5,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
 </head>
 <body>
 
 
 <div class="findFriend" th:fragment="findFriend">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+
     <div class="findFriend">
         <span style="padding-left:35%">Searching friend</span>
         <hr>
@@ -20,11 +23,14 @@
 
     <div class="peopleList" id="peopleList">
 
-            <div class="people"  th:each="people, state : ${peoples}">
-                <a th:href="@{/friends/profileUser(id=${people.getId()})}">
-                    <img  th:src="@{'data:image/jpeg;base64,'+${people.encodeBase64}}"/> <br>
-                    <label th:text="${people.getFullName()}" style="color: black"></label>
-                </a>
+            <div class="people" id="p" th:each="people, state : ${peoples}">
+                <div>
+                    <a th:href="@{/friends/profileUser(id=${people.getId()})}">
+                        <img  th:src="@{'data:image/jpeg;base64,'+${people.encodeBase64}}"/> <br>
+                        <label th:text="${people.getFullName()}" style="color: black"></label>
+                    </a>
+                </div>
+
 
             </div>
 
@@ -32,6 +38,29 @@
 
     </div>
 
+    <script>
+
+        $("#filter").keyup(function() {
+
+            var filter = $(this).val(),
+                count = 0;
+
+            $('#p div').each(function() {
+
+                // If the list item does not contain the text phrase fade it out
+                if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                    $(this).hide();  // MY CHANGE
+
+                    // Show the list item if the phrase matches and increase the count by 1
+                } else {
+                    $(this).show(); // MY CHANGE
+                    count++;
+                }
+
+            });
+
+        });
+    </script>
 
 </div>
 
