@@ -16,20 +16,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 @Controller
 @RequestMapping("/news")
-public class NewsController extends GeneralController{
+public class NewsController extends GeneralController {
 
     @Autowired
     private NewsServiceImpl newsService;
-
-    @Autowired
-    private FriendsService friendsService;
-
 
     @RequestMapping
     public String showNews(Principal principal, ModelMap map) {

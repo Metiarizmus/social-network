@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
@@ -12,7 +13,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContentGroup extends BaseEntity{
+public class ContentGroup extends BaseEntity implements Serializable{
 
     @Column(name = "content", columnDefinition = "TEXT")
     private String content;

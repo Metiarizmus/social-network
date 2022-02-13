@@ -25,8 +25,6 @@ public class ProfileServiceImpl extends BaseServiceImpl implements UserProfileSe
     @Autowired
     private DtoConvert dtoConvert;
 
-    @Autowired
-    private FriendRepository friendRepository;
 
     @Override
     public void saveAvatar(byte[] avatar, String email) {

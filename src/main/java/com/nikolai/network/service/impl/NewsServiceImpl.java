@@ -9,7 +9,7 @@ import com.nikolai.network.repository.GroupRepository;
 import com.nikolai.network.repository.UserRepository;
 import com.nikolai.network.utils.DtoConvert;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
+
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class NewsServiceImpl {
     @Autowired
     private DtoConvert dtoConvert;
 
-    @Cacheable(cacheNames = "content")
+
     public List<ContentGroupDto> showContentGroupForUser(String email) {
 
         User user = userRepository.findByEmail(email);
@@ -46,8 +46,6 @@ public class NewsServiceImpl {
         for (ContentGroup q : contentGroups) {
             contentGroupDtos.add(dtoConvert.convertToContentDto(q));
         }
-
-
 
         return contentGroupDtos;
 
